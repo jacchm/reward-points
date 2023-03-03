@@ -1,15 +1,15 @@
 package com.jacchm.project.adapter.repository;
 
-import com.jacchm.project.domain.model.Metadata;
+import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 
-
+@Data
 @Document
-class TransactionEntity {
+public class TransactionEntity {
   private String id;
   private String customerId;
   private Instant date;
-  private Metadata metadata;
+  private MetadataEntity metadata;
 }

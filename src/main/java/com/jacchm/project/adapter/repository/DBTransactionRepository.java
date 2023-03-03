@@ -1,6 +1,7 @@
 package com.jacchm.project.adapter.repository;
 
 import com.jacchm.project.adapter.RepositoryException;
+import com.jacchm.project.adapter.TransactionMapper;
 import com.jacchm.project.adapter.api.DateRange;
 import com.jacchm.project.domain.model.Transaction;
 import com.jacchm.project.domain.port.TransactionRepository;
@@ -18,12 +19,14 @@ public class DBTransactionRepository implements TransactionRepository {
       The server has encountered an error during processing the request data while trying to connect to the database.""";
 
   private final MongoTransactionRepository mongoRepository;
+  private final TransactionMapper transactionMapper;
 
   @Override
   public Flux<Transaction> fetchAllByCustomerId(final String customerId) {
     return mongoRepository.findAllByCustomerId(customerId)
         .doOnError(err -> log.error("Could not fetch all the transactions by customerId={}", customerId))
-        .onErrorMap(err -> new RepositoryException(SERVER_ERR_MSG));
+        .onErrorMap(err -> new RepositoryException(SERVER_ERR_MSG))
+        .map(transactionMapper::toDomain);
   }
 
   @Override
@@ -31,7 +34,8 @@ public class DBTransactionRepository implements TransactionRepository {
     return mongoRepository.findAllByCustomerIdAndDateBetween(customerId, dateRange.getFrom(), dateRange.getTo())
         .doOnError(err -> log.error("Could not fetch all the transactions by customerId={} from={} to={}",
             customerId, dateRange.getFrom(), dateRange.getTo()))
-        .onErrorMap(err -> new RepositoryException(SERVER_ERR_MSG));
+        .onErrorMap(err -> new RepositoryException(SERVER_ERR_MSG))
+        .map(transactionMapper::toDomain);
   }
 
 }
