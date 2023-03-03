@@ -1,0 +1,9 @@
+# SPRING_PROFILES_ACTIVE=test
+#spring:
+#  data:
+#    mongodb:
+#      uri: "r2dbc:tc:mongodb:///training?TC_IMAGE_TAG=latest"
+#      database: training
+spring:
+  datasource:
+    url: r2dbc:tc:mongodb:///training?TC_IMAGE_TAG=latest

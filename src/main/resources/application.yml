@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: "training-service"
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: transactionDB
+  jackson:
+    default-property-inclusion: non_null
+
+---
+mongo:
+  database: transactionDB
+  collection-transactions: transactions

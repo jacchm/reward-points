@@ -1,0 +1,26 @@
+sourceSets {
+    intTest {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
+configurations {
+    intTestCompileOnly.extendsFrom(testCompileOnly)
+    intTestImplementation.extendsFrom(testImplementation)
+    intTestRuntimeOnly.extendsFrom(runtimeOnly)
+}
+
+task intTest(type: Test) {
+    description = 'Runs integration tests.'
+    group = 'verification'
+
+    useJUnitPlatform()
+    testClassesDirs = sourceSets.intTest.output.classesDirs
+    classpath = sourceSets.intTest.runtimeClasspath
+    shouldRunAfter test
+    reports.html.destination = file("${reporting.baseDir}/${name}")
+}
+
+dependencies {
+}
