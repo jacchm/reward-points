@@ -1,4 +1,4 @@
-package com.jacchm.transaction.adapter;
+package com.jacchm.transaction.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
