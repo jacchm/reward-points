@@ -1,6 +1,6 @@
-package com.jacchm.project.adapter.repository;
+package com.jacchm.transaction.adapter.repository;
 
-import com.jacchm.project.domain.model.Metadata;
+import com.jacchm.transaction.domain.model.Metadata;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 

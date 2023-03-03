@@ -1,4 +1,4 @@
-package com.jacchm.project.adapter.repository;
+package com.jacchm.transaction.adapter.repository;
 
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Flux;

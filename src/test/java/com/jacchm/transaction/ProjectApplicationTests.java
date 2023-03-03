@@ -1,4 +1,4 @@
-package com.jacchm.project;
+package com.jacchm.transaction;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

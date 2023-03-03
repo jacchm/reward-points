@@ -1,7 +1,7 @@
-package com.jacchm.project.adapter.api;
+package com.jacchm.transaction.adapter.api;
 
-import com.jacchm.project.adapter.TransactionMapper;
-import com.jacchm.project.domain.port.TransactionService;
+import com.jacchm.transaction.adapter.TransactionMapper;
+import com.jacchm.transaction.domain.port.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;

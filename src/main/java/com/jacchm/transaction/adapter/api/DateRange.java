@@ -1,4 +1,4 @@
-package com.jacchm.project.adapter.api;
+package com.jacchm.transaction.adapter.api;
 
 import lombok.Value;
 

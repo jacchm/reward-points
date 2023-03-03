@@ -1,4 +1,4 @@
-package com.jacchm.project.adapter;
+package com.jacchm.transaction.adapter;
 
 import org.springframework.http.HttpStatus;
 

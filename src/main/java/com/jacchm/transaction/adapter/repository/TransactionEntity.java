@@ -1,4 +1,4 @@
-package com.jacchm.project.adapter.repository;
+package com.jacchm.transaction.adapter.repository;
 
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;

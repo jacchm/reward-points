@@ -1,4 +1,4 @@
-package com.jacchm.project.domain.model;
+package com.jacchm.transaction.domain.model;
 
 import lombok.Value;
 

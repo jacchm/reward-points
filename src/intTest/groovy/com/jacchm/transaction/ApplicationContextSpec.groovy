@@ -1,4 +1,4 @@
-package com.jacchm.project
+package com.jacchm.transaction
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest

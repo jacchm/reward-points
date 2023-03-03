@@ -1,7 +1,7 @@
-package com.jacchm.project.domain.port;
+package com.jacchm.transaction.domain.port;
 
-import com.jacchm.project.adapter.api.DateRange;
-import com.jacchm.project.domain.model.Transaction;
+import com.jacchm.transaction.adapter.api.DateRange;
+import com.jacchm.transaction.domain.model.Transaction;
 import reactor.core.publisher.Flux;
 
 public interface TransactionRepository {

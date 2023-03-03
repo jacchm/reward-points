@@ -1,4 +1,4 @@
-package com.jacchm.project.adapter;
+package com.jacchm.transaction.adapter;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

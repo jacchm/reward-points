@@ -1,7 +1,7 @@
-package com.jacchm.project.adapter;
+package com.jacchm.transaction.adapter;
 
-import com.jacchm.project.adapter.repository.TransactionEntity;
-import com.jacchm.project.domain.model.Transaction;
+import com.jacchm.transaction.adapter.repository.TransactionEntity;
+import com.jacchm.transaction.domain.model.Transaction;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = MetadataMapper.class)
