@@ -1,6 +1,5 @@
 package com.jacchm.rewardpoints.domain.model;
 
-import com.jacchm.transaction.domain.model.Metadata;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,6 +13,5 @@ public class Transaction {
   private String customerId;
   private BigDecimal amount;
   private Instant date;
-  private Metadata metadata;
 
 }
