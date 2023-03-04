@@ -11,7 +11,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Instant;
-import java.util.Objects;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -41,7 +40,8 @@ public class DBTransactionRepository implements TransactionRepository {
     final Flux<TransactionEntity> findByCustomerIdAndDateRangeFlux = fetchAllByCustomerIdAndBetweenDates(customerId, queryParams);
     final Flux<TransactionEntity> findByCustomerIdFlux = fetchAllByCustomerId(customerId);
 
-    return (Objects.isNull(queryParams) ? findByCustomerIdFlux : findByCustomerIdAndDateRangeFlux)
+//    return (Objects.isNull(queryParams) ? findByCustomerIdFlux : findByCustomerIdAndDateRangeFlux)
+    return findByCustomerIdFlux
         .onErrorMap(err -> new RepositoryException(SERVER_ERR_MSG))
         .map(TransactionEntity::toDomain);
   }

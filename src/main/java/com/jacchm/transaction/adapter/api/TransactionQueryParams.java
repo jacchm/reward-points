@@ -26,6 +26,7 @@ record TransactionQueryParams(
     final Instant toDate = cal.getTime().toInstant();
 
     return QueryParams.builder()
+        .customerId(customerId)
         .fromDate(fromDate)
         .toDate(toDate)
         .build();

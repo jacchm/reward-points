@@ -4,6 +4,7 @@ import com.jacchm.transaction.domain.model.Transaction;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Builder
@@ -11,6 +12,7 @@ import java.time.Instant;
 class TransactionResponse {
   private String id;
   private String customerId;
+  private BigDecimal amount;
   private Instant date;
   private MetadataResponse metadata;
 
@@ -18,6 +20,7 @@ class TransactionResponse {
     return TransactionResponse.builder()
         .id(transaction.getId())
         .customerId(transaction.getCustomerId())
+        .amount(transaction.getAmount())
         .date(transaction.getDate())
         .metadata(MetadataResponse.of(transaction.getMetadata()))
         .build();
