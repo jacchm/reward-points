@@ -1,46 +1,40 @@
 package com.jacchm.rewardpoints.domain.port;
 
+import com.jacchm.rewardpoints.domain.RewardPointsCalculator;
 import com.jacchm.rewardpoints.domain.model.RewardPoints;
 import com.jacchm.rewardpoints.domain.model.Transaction;
-import com.jacchm.transaction.adapter.api.MonthEnum;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 
-import java.math.BigDecimal;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+@Slf4j
+@RequiredArgsConstructor
 public final class RewardPointsService {
 
-  private static final Map<Integer, Integer> REWARD_POINTS_TIERS = Map.of(
-      50, 0,
-      100, 2,
-      Integer.MAX_VALUE, 1);
+  private final RewardPointsCalculator calculator;
 
   public Flux<RewardPoints> calculateRewardPoints(final List<Transaction> transactions) {
     return Flux.fromIterable(transactions)
         .groupBy(Transaction::getCustomerId)
-        .flatMap(groupedFlux -> groupedFlux
-            .map(Transaction::getAmount)
-            .map(this::calculateNumberOfRewardPoints)
-            .map(rewardPointsNumber ->
-                RewardPoints.of(groupedFlux.key(), Map.of(MonthEnum.JANUARY, rewardPointsNumber)))
-        );
-  }
-
-  private Integer calculateNumberOfRewardPoints(final BigDecimal payment) {
-    int numberOfRewardPoints = 0;
-    int paymentRounded = payment.intValue();
-    if (paymentRounded <= 50) {
-      return 0;
-    }
-    if (paymentRounded > 100) {
-      numberOfRewardPoints += paymentRounded - 100;
-      paymentRounded -= paymentRounded - 100;
-    }
-    if (paymentRounded <= 100) {
-      numberOfRewardPoints += (paymentRounded - 50) * 2;
-    }
-    return numberOfRewardPoints;
+        .flatMap(customerIdTransactionFlux -> customerIdTransactionFlux
+            .groupBy(x -> x.getDate().atZone(ZoneId.systemDefault()).getMonth())
+            .flatMap(dateTransactionFlux -> dateTransactionFlux
+                .map(calculator::calculateRewardPointsPerTransaction)
+                .reduce(Integer::sum)
+                .map(rewardPoints -> Map.of(dateTransactionFlux.key(), rewardPoints))
+            )
+            .doOnNext(next -> log.info("next={}", next))
+            .reduce((m1, m2) -> Stream.concat(m1.entrySet().stream(), m2.entrySet().stream())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)))
+            .map(rewardPointsMap -> RewardPoints.of(customerIdTransactionFlux.key(), rewardPointsMap))
+        )
+        .doOnNext(next -> log.info("rewardPoints={}", next));
   }
 
 }
