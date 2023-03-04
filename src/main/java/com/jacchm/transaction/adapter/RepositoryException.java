@@ -1,5 +1,6 @@
 package com.jacchm.transaction.adapter;
 
+import com.jacchm.transaction.domain.DomainException;
 import org.springframework.http.HttpStatus;
 
 public class RepositoryException extends DomainException {

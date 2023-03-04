@@ -2,6 +2,7 @@ package com.jacchm.transaction.adapter.repository;
 
 import com.jacchm.transaction.domain.model.Metadata;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,6 +10,7 @@ import java.time.Instant;
 
 @AllArgsConstructor
 @Data
+@Builder
 @Document
 public class MetadataEntity {
 
@@ -25,6 +27,15 @@ public class MetadataEntity {
         .version(this.version)
         .createdAt(this.createdAt)
         .modifiedAt(this.modifiedAt)
+        .build();
+  }
+
+  static MetadataEntity of(final Metadata metadata) {
+    return MetadataEntity
+        .builder()
+        .version(metadata.getVersion())
+        .createdAt(metadata.getCreatedAt())
+        .modifiedAt(metadata.getModifiedAt())
         .build();
   }
 }

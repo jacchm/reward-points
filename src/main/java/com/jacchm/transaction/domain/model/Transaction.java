@@ -1,15 +1,17 @@
 package com.jacchm.transaction.domain.model;
 
 import lombok.Builder;
-import lombok.Value;
+import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Builder
-@Value
+@Data
 public class Transaction {
-  String id;
-  String customerId;
-  Instant date;
-  Metadata metadata;
+  private String id;
+  private String customerId;
+  private BigDecimal amount;
+  private Instant date;
+  private Metadata metadata;
 }

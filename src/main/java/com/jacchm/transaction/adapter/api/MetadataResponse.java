@@ -2,9 +2,11 @@ package com.jacchm.transaction.adapter.api;
 
 import com.jacchm.transaction.domain.model.Metadata;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.time.Instant;
 
+@Getter
 @Builder
 public class MetadataResponse {
 

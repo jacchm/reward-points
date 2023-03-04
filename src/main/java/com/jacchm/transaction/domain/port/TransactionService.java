@@ -1,5 +1,6 @@
 package com.jacchm.transaction.domain.port;
 
+import com.jacchm.transaction.domain.model.QueryParams;
 import com.jacchm.transaction.domain.model.Transaction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,12 +13,12 @@ public final class TransactionService {
 
   private final TransactionRepository transactionRepository;
 
-  public Mono<Transaction> createTransaction() {
-    return Mono.empty();
+  public Mono<Transaction> createTransaction(final Transaction transaction) {
+    return transactionRepository.create(transaction);
   }
 
-  public Flux<Transaction> fetchAllByCustomerId(final String customerId) {
-    return transactionRepository.fetchAllByCustomerId(customerId);
+  public Flux<Transaction> fetchAllByCustomerIdAndBetweenDates(final QueryParams queryParams) {
+    return transactionRepository.fetchAllByQueryParams(queryParams);
   }
 
 }

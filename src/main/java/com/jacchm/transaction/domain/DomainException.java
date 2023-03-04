@@ -1,4 +1,4 @@
-package com.jacchm.transaction.adapter;
+package com.jacchm.transaction.domain;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import java.util.List;
 
 @Getter
-abstract class DomainException extends RuntimeException {
+public abstract class DomainException extends RuntimeException {
 
   private final HttpStatus status;
   private List<String> errorDetails;

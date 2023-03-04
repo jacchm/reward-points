@@ -1,13 +1,17 @@
 package com.jacchm.transaction.adapter.repository;
 
 import com.jacchm.transaction.adapter.RepositoryException;
-import com.jacchm.transaction.adapter.api.DateRange;
+import com.jacchm.transaction.domain.model.QueryParams;
 import com.jacchm.transaction.domain.model.Transaction;
 import com.jacchm.transaction.domain.port.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.time.Instant;
+import java.util.Objects;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -20,20 +24,37 @@ public class DBTransactionRepository implements TransactionRepository {
   private final MongoTransactionRepository mongoRepository;
 
   @Override
-  public Flux<Transaction> fetchAllByCustomerId(final String customerId) {
-    return mongoRepository.findAllByCustomerId(customerId)
-        .doOnError(err -> log.error("Could not fetch all the transactions by customerId={}", customerId))
+  public Mono<Transaction> create(final Transaction transaction) {
+    final TransactionEntity newTransaction = TransactionEntity.of(transaction);
+    return mongoRepository.save(newTransaction)
+        .doOnError(err -> log.error("Could not create a new transaction with body={}. Exception={}", newTransaction, err))
         .onErrorMap(err -> new RepositoryException(SERVER_ERR_MSG))
         .map(TransactionEntity::toDomain);
   }
 
   @Override
-  public Flux<Transaction> fetchAllByCustomerIdAndDateRange(final String customerId, final DateRange dateRange) {
-    return mongoRepository.findAllByCustomerIdAndDateBetween(customerId, dateRange.getFrom(), dateRange.getTo())
-        .doOnError(err -> log.error("Could not fetch all the transactions by customerId={} from={} to={}",
-            customerId, dateRange.getFrom(), dateRange.getTo()))
+  public Flux<Transaction> fetchAllByQueryParams(final QueryParams queryParams) {
+    final String customerId = queryParams.getCustomerId();
+    final Instant fromDate = queryParams.getFromDate();
+    final Instant toDate = queryParams.getToDate();
+
+    final Flux<TransactionEntity> findByCustomerIdAndDateRangeFlux = fetchAllByCustomerIdAndBetweenDates(customerId, queryParams);
+    final Flux<TransactionEntity> findByCustomerIdFlux = fetchAllByCustomerId(customerId);
+
+    return (Objects.isNull(queryParams) ? findByCustomerIdFlux : findByCustomerIdAndDateRangeFlux)
         .onErrorMap(err -> new RepositoryException(SERVER_ERR_MSG))
         .map(TransactionEntity::toDomain);
+  }
+
+  private Flux<TransactionEntity> fetchAllByCustomerIdAndBetweenDates(final String customerId, final QueryParams queryParams) {
+    return mongoRepository.findAllByCustomerIdAndDateBetween(customerId, queryParams.getFromDate(), queryParams.getToDate())
+        .doOnError(err -> log.error("Could not fetch all the transactions by customerId={} from={} to={}",
+            customerId, queryParams.getFromDate(), queryParams.getToDate()));
+  }
+
+  private Flux<TransactionEntity> fetchAllByCustomerId(final String customerId) {
+    return mongoRepository.findAllByCustomerId(customerId)
+        .doOnError(err -> log.error("Could not fetch all the transactions by customerId={}", customerId));
   }
 
 }

@@ -2,17 +2,19 @@ package com.jacchm.transaction.adapter.api;
 
 import com.jacchm.transaction.domain.model.Transaction;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.time.Instant;
 
 @Builder
-public class TransactionResponse {
+@Getter
+class TransactionResponse {
   private String id;
   private String customerId;
   private Instant date;
   private MetadataResponse metadata;
 
-  public static TransactionResponse of(Transaction transaction) {
+  static TransactionResponse of(Transaction transaction) {
     return TransactionResponse.builder()
         .id(transaction.getId())
         .customerId(transaction.getCustomerId())
