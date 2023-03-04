@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class GlobalExceptionWrapper extends DefaultErrorAttributes {
+class GlobalExceptionWrapper extends DefaultErrorAttributes {
 
   private static final String REQUEST_ID = "requestId";
   private static final String EXCEPTION = "exception";

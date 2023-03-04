@@ -12,7 +12,7 @@ import java.time.Instant;
 @Data
 @Builder
 @Document
-public class TransactionEntity {
+class TransactionEntity {
 
   @BsonId
   private String id;

@@ -8,7 +8,7 @@ import java.time.Instant;
 
 @Getter
 @Builder
-public class MetadataResponse {
+class MetadataResponse {
 
   Integer version;
   Instant createdAt;

@@ -12,13 +12,13 @@ import java.time.Instant;
 @Data
 @Builder
 @Document
-public class MetadataEntity {
+class MetadataEntity {
 
   Integer version;
   Instant createdAt;
   Instant modifiedAt;
 
-  public static MetadataEntity freshMetadata() {
+  static MetadataEntity freshMetadata() {
     return new MetadataEntity(1, Instant.now(), Instant.now());
   }
 

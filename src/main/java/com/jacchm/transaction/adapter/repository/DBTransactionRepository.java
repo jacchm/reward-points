@@ -1,6 +1,5 @@
 package com.jacchm.transaction.adapter.repository;
 
-import com.jacchm.transaction.adapter.RepositoryException;
 import com.jacchm.transaction.domain.model.QueryParams;
 import com.jacchm.transaction.domain.model.Transaction;
 import com.jacchm.transaction.domain.port.TransactionRepository;
@@ -15,7 +14,7 @@ import java.time.Instant;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class DBTransactionRepository implements TransactionRepository {
+class DBTransactionRepository implements TransactionRepository {
 
   private static final String SERVER_ERR_MSG = """
       The server has encountered an error during processing the request data while trying to connect to the database.""";
