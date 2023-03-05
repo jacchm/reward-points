@@ -13,7 +13,7 @@ import spock.lang.Specification
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         properties = [
-                "spring.datasource.url=r2dbc:tc:mongodb:///training?TC_IMAGE_TAG=latest"
+                "spring.datasource.url=r2dbc:tc:mongodb:///transactionDB?TC_IMAGE_TAG=latest"
         ]
 )
 @Testcontainers

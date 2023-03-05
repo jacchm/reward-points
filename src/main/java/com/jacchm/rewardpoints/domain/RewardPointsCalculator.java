@@ -20,8 +20,8 @@ public class RewardPointsCalculator {
   public Integer calculateRewardPointsPerTransaction(final Transaction transaction) {
     final int payment = transaction.getAmount().intValue();
     if (payment < 0) return 0;
-    final int tierNo = findMaximalApplicableTier(payment);
-    return calculateRewardPoint(payment, tierNo);
+    final int maxApplicableTier = findMaximalApplicableTier(payment);
+    return calculateRewardPoints(payment, maxApplicableTier);
   }
 
   private int findMaximalApplicableTier(final int payment) {
@@ -34,11 +34,11 @@ public class RewardPointsCalculator {
     return tierNo;
   }
 
-  private int calculateRewardPoint(int payment, final int tierNo) {
+  private int calculateRewardPoints(int payment, final int maxApplicableTier) {
     int rewardPoints = 0;
     Tuple2<Integer, Integer> tier;
     int amountInTier;
-    for (int i = tierNo; i >= 0; i--) {
+    for (int i = maxApplicableTier; i >= 0; i--) {
       tier = REWARD_POINTS_TIERS.get(i);
       amountInTier = payment - tier.getT1();
       rewardPoints += amountInTier * tier.getT2();

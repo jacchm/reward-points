@@ -22,14 +22,21 @@ class RewardPointsCalculatorSpec extends Specification {
         when: "calculating reward points"
         def rewardPoints = rewardPointsCalculator.calculateRewardPointsPerTransaction(transaction)
 
-        then: "result should be correct"
+        then: "number of calculated reward points should be equal to expected value"
         rewardPoints == expectedRewardPoints
 
         where:
         amount || expectedRewardPoints
-        120    || 90
+        -100   || 0
+        0      || 0
+        1      || 0
         50     || 0
-        70     || 20
         67     || 17
+        70     || 20
+        100    || 50
+        120    || 90 // values given in the task specification
+        135    || 120
+        200    || 250
+        300    || 450
     }
 }

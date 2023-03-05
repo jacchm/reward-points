@@ -1,8 +1,10 @@
 package com.jacchm.rewardpoints.adapter.api;
 
 import com.jacchm.rewardpoints.domain.model.RewardPoints;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.Month;
 import java.util.Map;
@@ -11,6 +13,8 @@ import java.util.stream.Collectors;
 
 @Builder
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 class RewardPointsResponse {
   private String customerId;
   private Map<Month, Integer> rewardPointsPerMonth;
